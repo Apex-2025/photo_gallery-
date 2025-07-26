@@ -26,6 +26,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/photos/create', 'PhotoController@create');
 
     Route::post('/photos', 'PhotoController@store');
+
+    Route::get('/photos/{id}', 'PhotoController@show');
 });
 
 

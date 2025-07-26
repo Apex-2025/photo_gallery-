@@ -26,15 +26,17 @@
                             <div class="row">
                                 @foreach ($photos as $photo)
                                     <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
-                                            <img src="{{ url('images/' . $photo->filename) }}" alt="{{ $photo->title }}" style="width: 100%; height: 200px; object-fit: cover;">
-                                            <div class="caption">
-                                                <h3>{{ $photo->title }}</h3>
-                                                <p>{{ str_limit($photo->description, 100) }}</p>
-                                                <p>Завантажено: {{ $photo->user->name }}</p>
-                                                {{-- <p><a href="#" class="btn btn-primary" role="button">Переглянути</a></p> --}}
+                                        <a href="{{ url('/photos/' . $photo->id) }}">
+                                            <div class="thumbnail">
+                                                <img src="{{ url('images/' . $photo->filename) }}" alt="{{ $photo->title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                                <div class="caption">
+                                                    <h3>{{ $photo->title }}</h3>
+                                                    <p>{{ str_limit($photo->description, 100) }}</p>
+                                                    <p>Завантажено: {{ $photo->user->name }}</p>
+                                                    {{-- <p><a href="#" class="btn btn-primary" role="button">Переглянути</a></p> --}}
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>

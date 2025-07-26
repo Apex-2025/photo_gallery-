@@ -34,6 +34,7 @@ class PhotoController extends Controller
             'image' => 'required|mimes:jpeg,png,gif,webp|max:5120',
         ]);
 
+
         $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(public_path('images'), $imageName);
 
@@ -46,4 +47,11 @@ class PhotoController extends Controller
 
         return redirect('/photos')->with('status', 'Фотографія успішно завантажена!');
     }
+
+    public function show($id)
+    {
+        $photo = Photo::with('user')->findOrFail($id);
+        return view('photos.show', compact('photo'));
+    }
+
 }
