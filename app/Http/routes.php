@@ -15,6 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::auth();
+Route::group(['middleware' => 'web'], function () {
 
-Route::get('/home', 'HomeController@index');
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
+
+    Route::get('/photos', 'PhotoController@index');
+
+    Route::get('/photos/create', 'PhotoController@create');
+
+    Route::post('/photos', 'PhotoController@store');
+});
+
+
+
+
