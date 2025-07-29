@@ -39,11 +39,11 @@
                             <p>
                                 <a href="{{ url('/photos/' . $photo->id . '/edit') }}" class="btn btn-warning">Редагувати</a>
                                 {{-- Форма для видалення - зробимо пізніше --}}
-                                {{-- <form action="{{ url('/photos/' . $photo->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ url('/photos/' . $photo->id) }}" method="POST" style="display:inline;">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Ви впевнені, що хочете видалити це фото?')">Видалити</button>
-                                </form> --}}
+                                </form>
                             </p>
                         @endif
 

@@ -28,6 +28,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/photos', 'PhotoController@store');
 
     Route::get('/photos/{id}', 'PhotoController@show');
+
+    Route::get('/photos/{id}/edit', 'PhotoController@edit');
+
+    Route::put('/photos/{id}', 'PhotoController@update');
+
+    Route::delete('/photos/{id}', 'PhotoController@destroy');
 });
 
 
