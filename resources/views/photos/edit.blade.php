@@ -1,5 +1,3 @@
-{{-- resources/views/photos/edit.blade.php --}}
-
 @extends('layouts.app')
 
 @section('content')
@@ -21,19 +19,12 @@
 
                         <form action="{{ url('/photos/' . $photo->id) }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            {{ method_field('PUT') }} {{-- Це дозволить Laravel обробити запит як PUT --}}
+                            {{ method_field('PUT') }}
 
                             <div class="form-group">
                                 <label for="title">Назва фотографії</label>
                                 <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $photo->title) }}" required>
                             </div>
-
-                            <div class="form-group">
-                                <label for="description">Опис</label>
-                                <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $photo->description) }}</textarea>
-                            </div>
-
-                            {{-- Якщо ви дозволяєте зміну зображення при редагуванні, розкоментуйте цей блок --}}
 
                             <div class="form-group">
                                 <label for="image">Змінити файл зображення (залиште порожнім, щоб зберегти поточний)</label>

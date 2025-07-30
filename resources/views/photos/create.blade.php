@@ -26,11 +26,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Опис</label>
-                                <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
-                            </div>
-
-                            <div class="form-group">
                                 <label for="image">Файл зображення</label>
                                 <input type="file" id="image" name="image" required>
                                 <p class="help-block">Будь ласка, завантажте файл зображення (JPG, PNG, GIF, WEBP) до 5 МБ.</p>

@@ -1,5 +1,3 @@
-{{-- C:\OSPanel\domains\photo_gallery\resources\views\partials\messages.blade.php --}}
-
 @if (session()->has('app_status'))
     <div id="custom-success-message" style="
         background-color: #d4edda;

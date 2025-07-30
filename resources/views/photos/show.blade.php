@@ -1,5 +1,3 @@
-{{-- resources/views/photos/show.blade.php --}}
-
 @extends('layouts.app')
 
 @section('content')
@@ -22,31 +20,27 @@
                         <hr>
 
                         <h3>{{ $photo->title }}</h3>
-                        @if ($photo->description)
-                            <p>{{ $photo->description }}</p>
-                        @else
-                            <p>Опис відсутній.</p>
-                        @endif
                         <p>
                             **Завантажено:** {{ $photo->user->name }}
                             <br>
                             **Дата завантаження:** {{ $photo->created_at->format('d M Y, H:i') }}
                         </p>
 
-                        {{-- Якщо ви хочете додати кнопки редагування/видалення для власника фото --}}
                         @if (Auth::check() && Auth::id() == $photo->user_id)
                             <hr>
-                            <p>
-                                <a href="{{ url('/photos/' . $photo->id . '/edit') }}" class="btn btn-warning">Редагувати</a>
-                                {{-- Форма для видалення - зробимо пізніше --}}
-                                <form action="{{ url('/photos/' . $photo->id) }}" method="POST" style="display:inline;">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Ви впевнені, що хочете видалити це фото?')">Видалити</button>
-                                </form>
-                            </p>
-                        @endif
+                            @if (Auth::check() && Auth::id() == $photo->user_id)
+                                <hr>
+                                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                                    <a href="{{ url('/photos/' . $photo->id . '/edit') }}" class="btn btn-warning" style="min-width: 100px; text-align: center;">Редагувати</a>
 
+                                    <form action="{{ url('/photos/' . $photo->id) }}" method="POST" style="display:inline;">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button type="submit" class="btn btn-danger" style="min-width: 100px; text-align: center;" onclick="return confirm('Ви впевнені, що хочете видалити це фото?')">Видалити</button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>

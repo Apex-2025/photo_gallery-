@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers; // Цей рядок дуже важливий!
+namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Photo; // Імпортуємо модель Photo
-use Auth; // Імпортуємо фасад Auth
+use App\Photo;
+use Auth;
 
 class PhotoController extends Controller
 {
@@ -30,7 +30,6 @@ class PhotoController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|max:255',
-            'description' => 'nullable',
             'image' => 'required|mimes:jpeg,png,gif,webp|max:5120',
         ]);
 
@@ -41,7 +40,6 @@ class PhotoController extends Controller
         $photo = new Photo;
         $photo->user_id = Auth::id();
         $photo->title = $request->input('title');
-        $photo->description = $request->input('description');
         $photo->filename = $imageName;
         $photo->save();
 
@@ -58,7 +56,6 @@ class PhotoController extends Controller
     {
         $photo = Photo::findOrFail($id);
 
-        // Перевіряємо, чи поточний користувач є власником фото
         if (Auth::id() !== $photo->user_id) {
             return redirect('/photos')->with('error', 'Ви не маєте прав для редагування цієї фотографії.');
         }
@@ -70,29 +67,21 @@ class PhotoController extends Controller
     {
         $photo = Photo::findOrFail($id);
 
-        // Перевіряємо, чи поточний користувач є власником фото
         if (Auth::id() !== $photo->user_id) {
             return redirect('/photos')->with('error', 'Ви не маєте прав для оновлення цієї фотографії.');
         }
 
-        // 1. Валідація вхідних даних
         $this->validate($request, [
             'title' => 'required|max:255',
-            'description' => 'nullable',
-            'image' => 'mimes:jpeg,png,gif,webp|max:5120', // змінa зображення при редагуванні
+            'image' => 'mimes:jpeg,png,gif,webp|max:5120',
         ]);
 
-        // 2. Оновлення запису в базі даних
         $photo->title = $request->input('title');
-        $photo->description = $request->input('description');
 
-        // Якщо ви дозволяєте зміну зображення при редагуванні, додайте цей блок:
         if ($request->hasFile('image')) {
-            // Видаляємо старий файл, якщо він існує
             if (file_exists(public_path('images/' . $photo->filename))) {
                 unlink(public_path('images/' . $photo->filename));
             }
-            // Завантажуємо новий файл
             $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move(public_path('images'), $imageName);
             $photo->filename = $imageName;
@@ -100,7 +89,6 @@ class PhotoController extends Controller
 
         $photo->save();
 
-        // Перенаправлення з повідомленням про успіх
         return redirect('/photos/' . $photo->id)->with('status', 'Фотографія успішно оновлена!');
     }
 
@@ -108,21 +96,16 @@ class PhotoController extends Controller
     {
         $photo = Photo::findOrFail($id);
 
-        // Перевіряємо, чи поточний користувач є власником фото
         if (Auth::id() !== $photo->user_id) {
             return redirect('/photos')->with('error', 'Ви не маєте прав для видалення цієї фотографії.');
         }
 
-        // 1. Видаляємо файл зображення з сервера
         if (file_exists(public_path('images/' . $photo->filename))) {
             unlink(public_path('images/' . $photo->filename));
         }
 
-        // 2. Видаляємо запис з бази даних
         $photo->delete();
 
-        // Перенаправлення з повідомленням про успіх
         return redirect('/photos')->with('status', 'Фотографія успішно видалена!');
     }
-
 }
